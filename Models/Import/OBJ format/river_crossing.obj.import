@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://bol1w6bmad7ni"
+path="res://.godot/imported/river_crossing.obj-e97648fb326d1279ebf4523893568f0d.mesh"
+
+[deps]
+
+files=["res://.godot/imported/river_crossing.obj-e97648fb326d1279ebf4523893568f0d.mesh"]
+
+source_file="res://Models/Import/OBJ format/river_crossing.obj"
+dest_files=["res://.godot/imported/river_crossing.obj-e97648fb326d1279ebf4523893568f0d.mesh", "res://.godot/imported/river_crossing.obj-e97648fb326d1279ebf4523893568f0d.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

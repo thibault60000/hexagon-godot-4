@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://b6fhm28whagvu"
+path="res://.godot/imported/path_straight.obj-87836d124fce919cf8e813425726aa0b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/path_straight.obj-87836d124fce919cf8e813425726aa0b.mesh"]
+
+source_file="res://Models/Import/OBJ format/path_straight.obj"
+dest_files=["res://.godot/imported/path_straight.obj-87836d124fce919cf8e813425726aa0b.mesh", "res://.godot/imported/path_straight.obj-87836d124fce919cf8e813425726aa0b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

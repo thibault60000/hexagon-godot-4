@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dt377rg1uk74m"
+path="res://.godot/imported/building_village.obj-ccc97ab12d7a9defa191f46415805218.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_village.obj-ccc97ab12d7a9defa191f46415805218.mesh"]
+
+source_file="res://Models/Import/OBJ format/building_village.obj"
+dest_files=["res://.godot/imported/building_village.obj-ccc97ab12d7a9defa191f46415805218.mesh", "res://.godot/imported/building_village.obj-ccc97ab12d7a9defa191f46415805218.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
