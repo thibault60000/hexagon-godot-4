@@ -11,9 +11,9 @@ script = ExtResource("1_u1dy2")
 
 [node name="GridMapTiles" type="GridMap" parent="."]
 mesh_library = ExtResource("2_sm62h")
-cell_size = Vector3(1, 0.03, 0.866)
+cell_size = Vector3(1, 1, 0.866)
 cell_center_y = false
-collision_layer = 3
+collision_layer = 1
 metadata/_editor_floor_ = Vector3(0, 0, 0)
 
 [node name="GridMapObjects" type="GridMap" parent="."]
@@ -21,13 +21,6 @@ visible = false
 mesh_library = ExtResource("3_6tyte")
 cell_size = Vector3(1, 0.03, 0.866)
 cell_center_y = false
-
-[node name="Player" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 20.079)
-script = ExtResource("5_8aa57")
-
-[node name="Camera3D" type="Camera3D" parent="Player"]
-fov = 30.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.572976, 0.413305, 0.707727, -0.52802, -0.474274, 0.704457, 0.626812, -0.777331, -0.0535146, -0.458761, 0.560922, -0.263812)
@@ -39,3 +32,10 @@ directional_shadow_split_2 = 0.073
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("5_leiss")
+
+[node name="Player" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 15.996)
+script = ExtResource("5_8aa57")
+
+[node name="Camera3D" type="Camera3D" parent="Player"]
+fov = 30.0

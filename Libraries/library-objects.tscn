@@ -1,16 +1,16 @@
 [gd_scene load_steps=4 format=3 uid="uid://crn28i66jl4ny"]
 
-[ext_resource type="ArrayMesh" path="res://Models/Items/mountain.mesh" id="1"]
-[ext_resource type="ArrayMesh" uid="uid://ct0cdn2xuvluo" path="res://Models/Items/house.mesh" id="2"]
-[ext_resource type="ArrayMesh" path="res://Models/Items/detail_forestA.mesh" id="3"]
+[ext_resource type="ArrayMesh" path="res://Models/Items/detail_forestA.mesh" id="1_2morl"]
+[ext_resource type="ArrayMesh" path="res://Models/Items/mountain.mesh" id="2_jt5os"]
+[ext_resource type="ArrayMesh" uid="uid://ct0cdn2xuvluo" path="res://Models/Items/house.mesh" id="3_kxh7r"]
 
 [node name="Node3D" type="Node3D"]
 
 [node name="tileForestA" type="MeshInstance3D" parent="."]
-mesh = ExtResource("3")
+mesh = ExtResource("1_2morl")
 
 [node name="tileMountain" type="MeshInstance3D" parent="."]
-mesh = ExtResource("1")
+mesh = ExtResource("2_jt5os")
 
 [node name="tileHouse" type="MeshInstance3D" parent="."]
-mesh = ExtResource("2")
+mesh = ExtResource("3_kxh7r")

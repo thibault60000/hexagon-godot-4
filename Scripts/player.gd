@@ -5,8 +5,8 @@ extends Node3D
 @export var angle: float= -50.0
 @export var border_margin_for_mouse: int = 30
 
-@onready var camera_3d = $Camera3D
-@onready var terrain_map = $"../GridMapTiles"
+@onready var camera_3d: Camera3D = $Camera3D
+@onready var terrain_map: GridMap = $"../GridMapTiles"
 
 var min_y := 8 
 var max_y := 20 
@@ -18,10 +18,16 @@ var current_speed = Vector3.ZERO
 var current_mouse_speed = Vector3.ZERO
 
 func _ready():
-	var test = terrain_map.get_cell_item(Vector3(0,0,0))
-	print("test en 0,0,0", test)
+	list_gridmap_cells()
 	update_camera_angle()
 
+func list_gridmap_cells():
+	var cell_positions = terrain_map.get_used_cells()
+	print("CELL POS -> ", cell_positions)
+	for cell_position in cell_positions:
+		var tile_index = terrain_map.get_cell_item(cell_position)
+		print("Position de la cellule : ", cell_position, ", Index de la tuile : ", tile_index)
+		
 func update_camera_angle():
 	var y_range = max_y - min_y
 	var y_position = clamp(self.global_transform.origin.y, min_y, max_y)
@@ -98,25 +104,27 @@ func zoomMouse(delta)->void:
 func _physics_process(delta):
 
 	var mouse_pos = get_viewport().get_mouse_position()
-	var ray_length = 1000.0
+	var ray_length = 50.0
 	var ray_from = camera_3d.project_ray_origin(mouse_pos)
-	var ray_to = camera_3d.project_ray_normal(mouse_pos * ray_length)
+	var ray_to = ray_from + camera_3d.project_ray_normal(mouse_pos) * ray_length
 
 	var space_state = get_world_3d().direct_space_state
-	var query = PhysicsRayQueryParameters3D.create(ray_from, ray_to)
-	var world_intersection = space_state.intersect_ray(query)
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	ray_query.from = ray_from
+	ray_query.to = ray_to
+	var world_intersection = space_state.intersect_ray(ray_query)
 	
 	if (world_intersection and world_intersection["collider"] and world_intersection["collider"] is GridMap):
 		if world_intersection.has("position"):
-			var gridmap_position = Vector3(world_intersection.position)
-			action_build(gridmap_position)
+			action_build(world_intersection.position)
 		else:
 			print("No intersection found")
 
 func action_build(gridmap_position):
 	if Input.is_action_just_pressed("click"):
-		var tile = terrain_map.get_cell_item(gridmap_position)
-		print("TILE INDEX ", tile, gridmap_position)
+		var clicked_tile = terrain_map.local_to_map(Vector3(gridmap_position.x, gridmap_position.y, gridmap_position.z))
+		var tile_index = terrain_map.get_cell_item(clicked_tile)
+		print("Vous avez cliqué sur la tuile : ", clicked_tile, " avec l'index : ", tile_index)
 		# terrain_map.set_cell_item(gridmap_position, index, gridmap.get_orthogonal_index_from_basis(selector.basis))
 		
 

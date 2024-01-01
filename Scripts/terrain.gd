@@ -24,30 +24,23 @@ func generate():
 	var offset = 0
 	
 	for x in range(worldSize):
-		
 		offset = 0
-		
-		for y in range(worldSize):
-			
-			if x % 2 and y % 2:
-				
+		for z in range(worldSize):
+			if x % 2 and z % 2:
 				if offset == 1:
 					offset = 0
 				else:
 					offset = 1
 				
-				# Get noise value for tile
-					
-				var _noise = round(noise.get_noise_2d(x, y) * 10)
+				var _noise = round(noise.get_noise_2d(x, z) * 10)
 				
 				# Terrain tile (color)
-				
 				var _tile = 0
 				if _noise < 0: _tile = 1
 				if _noise > 1: _tile = 2
 				
 				
-				set_terrain(Vector3(x + offset, _noise, y), _tile)
+				set_terrain(Vector3(x + offset, _noise *0.03, z), _tile)
 				
 				# Place objects (randomly)
 				
@@ -63,17 +56,17 @@ func generate():
 				if _tile == 0:
 					if  _random < 1:
 						# forest
-						set_tile(Vector3(x + offset, _noise, y), 2, _randomRotation)
+						set_tile(Vector3(x + offset, _noise, z), 2, _randomRotation)
 
 					elif  _random < 2:
 						# moutain
-						set_tile(Vector3(x + offset, _noise, y), 0, _randomRotation)					
+						set_tile(Vector3(x + offset, _noise, z), 0, _randomRotation)					
 
 
 				elif _tile > 1 and _random < 1:
 					# house
-					set_tile(Vector3(x + offset, _noise, y), 1, _randomRotation)
-
+					set_tile(Vector3(x + offset, _noise, z), 1, _randomRotation)
+	add_to_group("initialized")
 func set_terrain(_position, _tile):
 	terrain.set_cell_item(Vector3(_position.x - (worldSize / 2), _position.y, _position.z - (worldSize / 2)), _tile)
 	
