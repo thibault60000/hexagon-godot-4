@@ -104,7 +104,6 @@ func _physics_process(delta):
 	ray_query.from = ray_from
 	ray_query.to = ray_to
 	var intersection = space_state.intersect_ray(ray_query)
-	
 	if (intersection and intersection["collider"] and intersection["collider"] is StaticBody3D):
 		if intersection.has("position"):
 			var static_body: StaticBody3D = intersection["collider"]
@@ -126,9 +125,9 @@ func set_biome(static_body):
 
 func set_selector_position(static_body):
 	selector.visible = true
-	var tile_position = static_body.get_parent_node_3d().position
-	print("tile_position ", tile_position)
-	selector.position = Vector3(tile_position.x,tile_position.y + 1, tile_position.z)
+	var tile_position = static_body.get_parent().get_parent().position
+
+	selector.position = Vector3(tile_position.x,tile_position.y +0.43, tile_position.z)
 
 func action_build(static_body, intersection):
 	if Input.is_action_just_pressed("click"):

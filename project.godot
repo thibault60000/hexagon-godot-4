@@ -22,6 +22,7 @@ config/icon="res://icon.png"
 
 window/size/viewport_width=1360
 window/size/viewport_height=768
+mouse_cursor/custom_image="res://mouse.png"
 
 [gui]
 
