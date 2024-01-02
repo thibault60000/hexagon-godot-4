@@ -8,9 +8,10 @@ extends Node3D
 @onready var camera_3d: Camera3D = $Camera3D
 @onready var terrain_node_3d = $"../TerrainBuilder"
 @onready var selector = $"../Selector"
+@onready var biome = $"../Interface/PanelBiome/Biome"
 
 var min_y := 8 
-var max_y := 50 
+var max_y := 50
 
 var speed_factor = 0.2 
 var current_speed = Vector3.ZERO
@@ -107,16 +108,27 @@ func _physics_process(delta):
 	if (intersection and intersection["collider"] and intersection["collider"] is StaticBody3D):
 		if intersection.has("position"):
 			var static_body: StaticBody3D = intersection["collider"]
+
 			set_selector_position(static_body)
+			set_biome(static_body)
 			action_build(static_body, intersection)
-		else:
-			print("No intersection found")
-			selector.visible = false
+	else:
+		print("No intersection found")
+		set_biome(null)
+		selector.visible = false
+
+func set_biome(static_body):
+	if !static_body:
+		biome.text = "Hors map"
+	else:
+		var mesh_name = static_body.get_parent_node_3d().get_mesh().get_path().get_file().get_basename()
+		biome.text = "Biome : " + str(mesh_name)
 
 func set_selector_position(static_body):
 	selector.visible = true
 	var tile_position = static_body.get_parent_node_3d().position
-	selector.position = Vector3(tile_position.x,tile_position.y + 0.6, tile_position.z)
+	print("tile_position ", tile_position)
+	selector.position = Vector3(tile_position.x,tile_position.y + 1, tile_position.z)
 
 func action_build(static_body, intersection):
 	if Input.is_action_just_pressed("click"):
@@ -140,6 +152,14 @@ func action_build(static_body, intersection):
 			selector.visible = false
 			static_body.add_child(mesh_instance)
 
+	if Input.is_action_just_pressed("right_click"):
+		print("Vous avez right-cliqué sur la tuile : ", intersection.position)
+		for child in static_body.get_children():
+			if child is MeshInstance3D:
+				child.queue_free()
+				print("Element supprimé")
+				break
+			
 func _process(delta):
 	moveKeyboard(delta)
 	moveMouse(delta)

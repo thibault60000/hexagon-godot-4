@@ -1,14 +1,93 @@
-[gd_scene load_steps=5 format=3 uid="uid://bvybnhakb7l8d"]
+[gd_scene load_steps=32 format=3 uid="uid://bvybnhakb7l8d"]
 
 [ext_resource type="Script" path="res://Scripts/terrain.gd" id="1_u1dy2"]
+[ext_resource type="PackedScene" uid="uid://cfty3i0vgjev2" path="res://Scenes/Terrain/Grass.tscn" id="4_g07sx"]
 [ext_resource type="Texture2D" uid="uid://bbwhftip4kpvu" path="res://Sprites/selector.png" id="4_v1262"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="5_8aa57"]
+[ext_resource type="Script" path="res://Scripts/data_tiles.gd" id="5_k40tf"]
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://Environment/main-environment.tres" id="5_leiss"]
+[ext_resource type="PackedScene" uid="uid://buhx3e37cfjc7" path="res://Scenes/Terrain/Water.tscn" id="6_tk5sg"]
+[ext_resource type="PackedScene" uid="uid://c6ry8fq3ewkdw" path="res://Scenes/Terrain/Stone.tscn" id="7_225vu"]
+[ext_resource type="PackedScene" uid="uid://bnlgjhe0awgxk" path="res://Scenes/Terrain/Dirt.tscn" id="8_gpubk"]
+[ext_resource type="PackedScene" uid="uid://bgljlrrn2fuqf" path="res://Scenes/Terrain/DirtLumber.tscn" id="9_cetgt"]
+[ext_resource type="PackedScene" uid="uid://cws0eo6p0rep8" path="res://Scenes/Terrain/GrassForest.tscn" id="10_52tmm"]
+[ext_resource type="PackedScene" uid="uid://be3xqhq1jmsc1" path="res://Scenes/Terrain/StoneMountain.tscn" id="11_uppag"]
+[ext_resource type="PackedScene" uid="uid://c84ytaa31umaj" path="res://Scenes/Terrain/StoneRocks.tscn" id="12_38ku2"]
+[ext_resource type="PackedScene" uid="uid://cugo3845ctkpj" path="res://Scenes/Terrain/SandRocks.tscn" id="13_1slp0"]
+[ext_resource type="PackedScene" uid="uid://db5ocjjjfiarq" path="res://Scenes/Terrain/Sand.tscn" id="14_d7wni"]
+[ext_resource type="PackedScene" uid="uid://bt7dpo2pv0kyj" path="res://Scenes/Terrain/WaterRocks.tscn" id="15_ax8te"]
+[ext_resource type="PackedScene" uid="uid://cunweqd6mr7pb" path="res://Scenes/Terrain/WaterIsland.tscn" id="16_ydepm"]
+[ext_resource type="PackedScene" uid="uid://cesonkaeumhgi" path="res://Scenes/Terrain/GrassHill.tscn" id="17_4010v"]
+
+[sub_resource type="Resource" id="Resource_lax0d"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("4_g07sx")
+name = "grass"
+
+[sub_resource type="Resource" id="Resource_u8u7p"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("6_tk5sg")
+name = "water"
+
+[sub_resource type="Resource" id="Resource_64jjv"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("7_225vu")
+name = "stone"
+
+[sub_resource type="Resource" id="Resource_h7c12"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("8_gpubk")
+name = "dirt"
+
+[sub_resource type="Resource" id="Resource_tneog"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("9_cetgt")
+name = "dirt_lumber"
+
+[sub_resource type="Resource" id="Resource_fglh1"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("10_52tmm")
+name = "grass_forest"
+
+[sub_resource type="Resource" id="Resource_5ckoq"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("11_uppag")
+name = "stone_mountain"
+
+[sub_resource type="Resource" id="Resource_fe4lb"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("12_38ku2")
+name = "stone_rocks"
+
+[sub_resource type="Resource" id="Resource_s00xj"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("13_1slp0")
+name = "sand_rocks"
+
+[sub_resource type="Resource" id="Resource_n640c"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("14_d7wni")
+name = "sand"
+
+[sub_resource type="Resource" id="Resource_dt4jo"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("15_ax8te")
+name = "water_rocks"
+
+[sub_resource type="Resource" id="Resource_ylmg4"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("16_ydepm")
+name = "water_island"
+
+[sub_resource type="Resource" id="Resource_atwq8"]
+script = ExtResource("5_k40tf")
+scene = ExtResource("17_4010v")
+name = "grass_hill"
 
 [node name="Main" type="Node3D"]
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
-transform = Transform3D(0.572976, 0.413305, 0.707727, -0.52802, -0.474274, 0.704457, 0.626812, -0.777331, -0.0535146, -0.458761, 0.560922, -0.263812)
+transform = Transform3D(0.572976, 0.413305, 0.707727, -0.52802, -0.474274, 0.704456, 0.626812, -0.777331, -0.0535143, -1.08667, 1.13957, -0.950721)
 light_color = Color(0.960784, 0.878431, 0.870588, 1)
 light_energy = 1.322
 shadow_enabled = true
@@ -44,19 +123,104 @@ anchor_right = 4.325
 anchor_bottom = 0.4
 offset_right = 40.0
 offset_bottom = 23.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
 text = "0 tuiles"
 metadata/_edit_use_anchors_ = true
 
 [node name="Generate" type="Button" parent="Interface/Control"]
 layout_mode = 0
-offset_left = 32.0
-offset_top = 55.0
-offset_right = 135.0
-offset_bottom = 89.0
+offset_left = 34.0
+offset_top = 40.0
+offset_right = 137.0
+offset_bottom = 74.0
 text = "Générer"
+
+[node name="PanelShortcut" type="Panel" parent="Interface"]
+layout_direction = 2
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 7.95
+offset_top = -46.505
+offset_right = 444.95
+offset_bottom = -7.185
+grow_vertical = 0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Left" type="Panel" parent="Interface/PanelShortcut"]
+layout_mode = 0
+offset_right = 214.0
+offset_bottom = 40.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ClickGauche" type="Label" parent="Interface/PanelShortcut/Left"]
+layout_mode = 0
+offset_left = 28.05
+offset_top = 7.505
+offset_right = 118.05
+offset_bottom = 30.505
+text = "Clic Gauche"
+
+[node name="Créer" type="Label" parent="Interface/PanelShortcut/Left"]
+layout_mode = 0
+offset_left = 125.05
+offset_top = 8.50501
+offset_right = 186.05
+offset_bottom = 31.505
+text = "-> Créer"
+
+[node name="Right" type="Panel" parent="Interface/PanelShortcut/Left"]
+layout_mode = 0
+offset_left = 227.0
+offset_right = 436.0
+offset_bottom = 40.0
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="ClickDroit" type="Label" parent="Interface/PanelShortcut/Left/Right"]
+layout_mode = 0
+offset_left = 15.05
+offset_top = 9.505
+offset_right = 105.05
+offset_bottom = 32.505
+text = "Clic Droit"
+
+[node name="Supprimer" type="Label" parent="Interface/PanelShortcut/Left/Right"]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 9.00001
+offset_right = 197.0
+offset_bottom = 32.0
+text = "-> Supprimer"
+
+[node name="PanelBiome" type="Panel" parent="Interface"]
+layout_direction = 2
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -120.5
+offset_top = 27.035
+offset_right = 120.5
+offset_bottom = 67.035
+grow_horizontal = 2
+size_flags_horizontal = 6
+size_flags_vertical = 6
+
+[node name="Biome" type="Label" parent="Interface/PanelBiome"]
+layout_direction = 1
+layout_mode = 0
+offset_left = 21.5
+offset_top = 8.965
+offset_right = 221.5
+offset_bottom = 31.965
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="TerrainBuilder" type="Node3D" parent="."]
 script = ExtResource("1_u1dy2")
+tiles = Array[ExtResource("5_k40tf")]([SubResource("Resource_lax0d"), SubResource("Resource_u8u7p"), SubResource("Resource_64jjv"), SubResource("Resource_h7c12"), SubResource("Resource_tneog"), SubResource("Resource_fglh1"), SubResource("Resource_5ckoq"), SubResource("Resource_fe4lb"), SubResource("Resource_s00xj"), SubResource("Resource_n640c"), SubResource("Resource_dt4jo"), SubResource("Resource_ylmg4"), SubResource("Resource_atwq8")])
 
 [node name="Selector" type="Node3D" parent="."]
 
