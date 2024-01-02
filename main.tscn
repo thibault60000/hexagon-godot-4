@@ -1,12 +1,11 @@
-[gd_scene load_steps=4 format=3 uid="uid://bvybnhakb7l8d"]
+[gd_scene load_steps=5 format=3 uid="uid://bvybnhakb7l8d"]
 
 [ext_resource type="Script" path="res://Scripts/terrain.gd" id="1_u1dy2"]
+[ext_resource type="Texture2D" uid="uid://bbwhftip4kpvu" path="res://Sprites/selector.png" id="4_v1262"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="5_8aa57"]
 [ext_resource type="Environment" uid="uid://bqnqgflivjvue" path="res://Environment/main-environment.tres" id="5_leiss"]
 
-[node name="TerrainNode3D" type="Node3D" node_paths=PackedStringArray("tiles_count")]
-script = ExtResource("1_u1dy2")
-tiles_count = NodePath("Interface/Control/TilesCount")
+[node name="Main" type="Node3D"]
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.572976, 0.413305, 0.707727, -0.52802, -0.474274, 0.704457, 0.626812, -0.777331, -0.0535146, -0.458761, 0.560922, -0.263812)
@@ -21,7 +20,7 @@ shadow_blur = 0.913
 environment = ExtResource("5_leiss")
 
 [node name="Player" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 15.996)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 12, 15.996)
 script = ExtResource("5_8aa57")
 
 [node name="Camera3D" type="Camera3D" parent="Player"]
@@ -55,3 +54,15 @@ offset_top = 55.0
 offset_right = 135.0
 offset_bottom = 89.0
 text = "Générer"
+
+[node name="TerrainBuilder" type="Node3D" parent="."]
+script = ExtResource("1_u1dy2")
+
+[node name="Selector" type="Node3D" parent="."]
+
+[node name="Sprite" type="Sprite3D" parent="Selector"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, 0, 0)
+axis = 1
+alpha_scissor_threshold = 0.225
+alpha_hash_scale = 1.7
+texture = ExtResource("4_v1262")

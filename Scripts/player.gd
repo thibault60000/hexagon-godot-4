@@ -2,16 +2,16 @@ extends Node3D
 
 @export var move_speed = 12
 @export var zoom_speed = 50
-@export var angle: float= -50.0
+@export var angle: float= -70.0
 @export var border_margin_for_mouse: int = 30
 
 @onready var camera_3d: Camera3D = $Camera3D
-@onready var terrain_node_3d: Node3D = $".."
+@onready var terrain_node_3d = $"../TerrainBuilder"
+@onready var selector = $"../Selector"
 
 var min_y := 8 
 var max_y := 50 
 
-var zoom_factor = 0.2
 var speed_factor = 0.2 
 var current_speed = Vector3.ZERO
 var current_mouse_speed = Vector3.ZERO
@@ -102,21 +102,26 @@ func _physics_process(delta):
 	var ray_query = PhysicsRayQueryParameters3D.new()
 	ray_query.from = ray_from
 	ray_query.to = ray_to
-	var world_intersection = space_state.intersect_ray(ray_query)
+	var intersection = space_state.intersect_ray(ray_query)
 	
-	if (world_intersection and world_intersection["collider"] and world_intersection["collider"] is StaticBody3D):
-		if world_intersection.has("position"):
-			action_build(world_intersection)
+	if (intersection and intersection["collider"] and intersection["collider"] is StaticBody3D):
+		if intersection.has("position"):
+			var static_body: StaticBody3D = intersection["collider"]
+			set_selector_position(static_body)
+			action_build(static_body, intersection)
 		else:
 			print("No intersection found")
+			selector.visible = false
 
-func action_build(intersection):
+func set_selector_position(static_body):
+	selector.visible = true
+	var tile_position = static_body.get_parent_node_3d().position
+	selector.position = Vector3(tile_position.x,tile_position.y + 0.6, tile_position.z)
+
+func action_build(static_body, intersection):
 	if Input.is_action_just_pressed("click"):
 		print("Vous avez cliqué sur la tuile : ", intersection.position)
-		var static_body: StaticBody3D = intersection["collider"]
 		var house = preload("res://Models/OBJ format/unit_house.obj")
-		
-		
 		var has_mesh_instance = false
 		for child in static_body.get_children():
 			if child is MeshInstance3D:
@@ -129,9 +134,10 @@ func action_build(intersection):
 			print("Aucun MeshInstance3D n'est présent parmi les enfants du StaticBody3D.")
 			var mesh_instance = MeshInstance3D.new()
 			mesh_instance.mesh = house
-			mesh_instance.transform.origin = Vector3(static_body.position.x, static_body.position.y + .33, static_body.position.z)
+			mesh_instance.transform.origin = Vector3(static_body.position.x, static_body.position.y + 0.4, static_body.position.z)
 			mesh_instance.scale = Vector3(1, 1, 1)
 		
+			selector.visible = false
 			static_body.add_child(mesh_instance)
 
 func _process(delta):

@@ -1,10 +1,10 @@
 extends Node3D
 
-@onready var player: Node3D = $Player
-
+@onready var player = $"../Player"
 @export var tiles: Array[Tiles] = []
-@export var tiles_count: Label
-@onready var generate_button: Button = $Interface/Control/Generate
+
+@onready var tiles_count = $"../Interface/Control/TilesCount"
+@onready var generate_button = $"../Interface/Control/Generate"
 
 var worldSize = 64
 var count = 0 
@@ -22,14 +22,30 @@ func _ready():
 	var water = Tiles.new()
 	water.mesh = preload("res://Models/OBJ format/water.obj")
 	water.name = "water"
+	
+	var water_island = Tiles.new()
+	water_island.mesh = preload("res://Models/OBJ format/water_island.obj")
+	water_island.name = "water_island"
+	
+	var water_rocks = Tiles.new()
+	water_rocks.mesh = preload("res://Models/OBJ format/water_rocks.obj")
+	water_rocks.name = "water_rocks"
 
 	var sand = Tiles.new()
 	sand.mesh = preload("res://Models/OBJ format/sand.obj")
 	sand.name = "sand"
 	
+	var sand_rocks = Tiles.new()
+	sand_rocks.mesh = preload("res://Models/OBJ format/sand_rocks.obj")
+	sand_rocks.name = "sand_rocks"
+	
 	var dirt = Tiles.new()
 	dirt.mesh = preload("res://Models/OBJ format/dirt.obj")
 	dirt.name = "dirt"
+	
+	var dirt_lumber = Tiles.new()
+	dirt_lumber.mesh = preload("res://Models/OBJ format/dirt_lumber.obj")
+	dirt_lumber.name = "dirt_lumber"
 
 	var grass = Tiles.new()
 	grass.mesh = preload("res://Models/OBJ format/grass.obj")
@@ -51,8 +67,12 @@ func _ready():
 	stone_rocks.mesh = preload("res://Models/OBJ format/stone_rocks.obj")
 	stone_rocks.name = "stone_rocks"
 	
+	var stone_mountain = Tiles.new()
+	stone_mountain.mesh = preload("res://Models/OBJ format/stone_mountain.obj")
+	stone_mountain.name = "stone_mountain"
+	
 
-	tiles = [water, sand, dirt, grass, grass_forest, grass_hill, stone, stone_rocks]
+	tiles = [water, water_island, water_rocks, sand, sand_rocks, dirt, dirt_lumber, grass, grass_forest, grass_hill, stone, stone_rocks, stone_mountain]
 	
 	create_grid()
 	fill_grid()
@@ -107,6 +127,43 @@ func setupNoiseFBm(noise):
 func fill_grid():
 	pass
 
+func generate_water_types():
+	var water_types = []
+	for i in range(90):
+		water_types.append("water")
+	for i in range(8):
+		water_types.append("water_rocks")
+	for i in range(2):
+		water_types.append("water_island")
+	return water_types
+	
+func generate_grass_types():
+	var grass_types = []
+	for i in range(60):
+		grass_types.append("grass")
+	for i in range(20):
+		grass_types.append("grass_forest")
+	for i in range(20):
+		grass_types.append("grass_hill")
+	return grass_types
+		
+func generate_sand_types():
+	var sand_types = []
+	for i in range(70):
+		sand_types.append("sand")
+	for i in range(30):
+		sand_types.append("sand_rocks")
+	return sand_types
+
+func generate_dirt_types():
+	var dirt_types = []
+	for i in range(70):
+		dirt_types.append("dirt")
+	for i in range(30):
+		dirt_types.append("dirt_lumber")
+	return dirt_types
+	
+		
 func create_grid(): 
 	var noise = FastNoiseLite.new()
 	
@@ -130,36 +187,36 @@ func create_grid():
 				var tile_name = "grass"
 				
 				if height <= 0: 
-					tile_name = "water"
+					var water_types = generate_water_types()
+					tile_name = water_types[randi() % water_types.size()]
 					height = 0
 		
-				if height > 0 and height < 1:
-					tile_name= "sand"
+				if height > 0 and height < 2:
+					var sand_types = generate_sand_types()
+					tile_name = sand_types[randi() % sand_types.size()]
 					height = 0.25
 					
-				if height >= 1 and height < 2:
-					tile_name= "dirt"
+				if height >=2 and height <3:
+					var grass_types = generate_grass_types()
+					tile_name = grass_types[randi() % grass_types.size()]
 					height = 0.5
 					
-				if height >= 2 and height < 3:
-					tile_name= "grass"
+				if height >= 3 and height < 4:
+					var dirt_lumber = generate_dirt_types()
+					tile_name = dirt_lumber[randi() % dirt_lumber.size()]
 					height = 0.75
 					
-				if height >= 3 and height < 4:
-					tile_name = "grass_forest"
-					height = 0.75
-				
-				if height >= 4 and height < 5:
-					tile_name = "grass_hill"
-					height = 0.75
-				
-				if height >= 5 and height <6:
+				if height >= 4 and height <5:
 					tile_name = "stone"
 					height = 1
 					
-				if height >= 6 and height < 7:
+				if height >= 5 and height < 6:
 					tile_name = "stone_rocks"
-					height = 1
+					height = 1.25
+					
+				if height >= 6:
+					tile_name = "stone_mountain"
+					height = 1.50
 				
 			
 				var mesh_instance = MeshInstance3D.new()
