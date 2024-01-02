@@ -10,11 +10,12 @@ tiles_count = NodePath("Interface/Control/TilesCount")
 
 [node name="Sun" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.572976, 0.413305, 0.707727, -0.52802, -0.474274, 0.704457, 0.626812, -0.777331, -0.0535146, -0.458761, 0.560922, -0.263812)
-light_color = Color(0.85098, 0.768627, 0.647059, 1)
-light_energy = 1.677
+light_color = Color(0.960784, 0.878431, 0.870588, 1)
+light_energy = 1.322
 shadow_enabled = true
-directional_shadow_split_1 = 0.09
-directional_shadow_split_2 = 0.073
+shadow_bias = 0.23
+shadow_normal_bias = 0.81
+shadow_blur = 0.913
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = ExtResource("5_leiss")
