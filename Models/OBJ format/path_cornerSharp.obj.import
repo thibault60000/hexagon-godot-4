@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dt7xnk6kbo03x"
+path="res://.godot/imported/path_cornerSharp.obj-e3100c7fabb0d5c3d0b292317c9b458c.mesh"
+
+[deps]
+
+files=["res://.godot/imported/path_cornerSharp.obj-e3100c7fabb0d5c3d0b292317c9b458c.mesh"]
+
+source_file="res://Models/OBJ format/path_cornerSharp.obj"
+dest_files=["res://.godot/imported/path_cornerSharp.obj-e3100c7fabb0d5c3d0b292317c9b458c.mesh", "res://.godot/imported/path_cornerSharp.obj-e3100c7fabb0d5c3d0b292317c9b458c.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

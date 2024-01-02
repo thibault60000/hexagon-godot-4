@@ -6,11 +6,10 @@ extends Node3D
 @export var border_margin_for_mouse: int = 30
 
 @onready var camera_3d: Camera3D = $Camera3D
-@onready var terrain_map: GridMap = $"../GridMapTiles"
+@onready var terrain_node_3d: Node3D = $".."
 
 var min_y := 8 
-var max_y := 20 
-
+var max_y := 50 
 
 var zoom_factor = 0.2
 var speed_factor = 0.2 
@@ -18,16 +17,8 @@ var current_speed = Vector3.ZERO
 var current_mouse_speed = Vector3.ZERO
 
 func _ready():
-	list_gridmap_cells()
 	update_camera_angle()
 
-func list_gridmap_cells():
-	var cell_positions = terrain_map.get_used_cells()
-	print("CELL POS -> ", cell_positions)
-	for cell_position in cell_positions:
-		var tile_index = terrain_map.get_cell_item(cell_position)
-		print("Position de la cellule : ", cell_position, ", Index de la tuile : ", tile_index)
-		
 func update_camera_angle():
 	var y_range = max_y - min_y
 	var y_position = clamp(self.global_transform.origin.y, min_y, max_y)
@@ -38,12 +29,12 @@ func update_camera_angle():
 func get_grid_bounds():
 	var min_position = Vector3.INF
 	var max_position = -Vector3.INF
-	for cell in terrain_map.get_used_cells():
-		var cell_position = terrain_map.map_to_local(cell)
-		min_position.x = min(min_position.x, cell_position.x)
-		min_position.z = min(min_position.z, cell_position.z)
-		max_position.x = max(max_position.x, cell_position.x)
-		max_position.z = max(max_position.z, cell_position.z)
+
+	min_position.x = min(min_position.x, 0)
+	min_position.z = min(min_position.z, 0)
+	max_position.x = max(max_position.x, terrain_node_3d.worldSize)
+	max_position.z = max(max_position.z, terrain_node_3d.worldSize)
+	
 	return {"min_position": min_position, "max_position": max_position}
 
 func is_within_grid(position):
@@ -58,7 +49,7 @@ func is_within_grid(position):
 func move(delta, direction):
 	var new_position = self.global_transform.origin + direction.normalized() * get_speed() * delta
 	if is_within_grid(new_position):
-		self.translate(direction * get_speed() * delta)
+		self.position = new_position.lerp(self.position, delta * 8)
 
 func get_speed():
 	return move_speed * (1 + self.global_transform.origin.y * speed_factor)
@@ -102,7 +93,6 @@ func zoomMouse(delta)->void:
 	update_camera_angle()
 
 func _physics_process(delta):
-
 	var mouse_pos = get_viewport().get_mouse_position()
 	var ray_length = 50.0
 	var ray_from = camera_3d.project_ray_origin(mouse_pos)
@@ -114,19 +104,35 @@ func _physics_process(delta):
 	ray_query.to = ray_to
 	var world_intersection = space_state.intersect_ray(ray_query)
 	
-	if (world_intersection and world_intersection["collider"] and world_intersection["collider"] is GridMap):
+	if (world_intersection and world_intersection["collider"] and world_intersection["collider"] is StaticBody3D):
 		if world_intersection.has("position"):
-			action_build(world_intersection.position)
+			action_build(world_intersection)
 		else:
 			print("No intersection found")
 
-func action_build(gridmap_position):
+func action_build(intersection):
 	if Input.is_action_just_pressed("click"):
-		var clicked_tile = terrain_map.local_to_map(Vector3(gridmap_position.x, gridmap_position.y, gridmap_position.z))
-		var tile_index = terrain_map.get_cell_item(clicked_tile)
-		print("Vous avez cliqué sur la tuile : ", clicked_tile, " avec l'index : ", tile_index)
-		# terrain_map.set_cell_item(gridmap_position, index, gridmap.get_orthogonal_index_from_basis(selector.basis))
+		print("Vous avez cliqué sur la tuile : ", intersection.position)
+		var static_body: StaticBody3D = intersection["collider"]
+		var house = preload("res://Models/OBJ format/unit_house.obj")
 		
+		
+		var has_mesh_instance = false
+		for child in static_body.get_children():
+			if child is MeshInstance3D:
+				has_mesh_instance = true
+				break
+
+		if has_mesh_instance:
+			print("Un MeshInstance3D est présent parmi les enfants du StaticBody3D.")
+		else:
+			print("Aucun MeshInstance3D n'est présent parmi les enfants du StaticBody3D.")
+			var mesh_instance = MeshInstance3D.new()
+			mesh_instance.mesh = house
+			mesh_instance.transform.origin = Vector3(static_body.position.x, static_body.position.y + .33, static_body.position.z)
+			mesh_instance.scale = Vector3(1, 1, 1)
+		
+			static_body.add_child(mesh_instance)
 
 func _process(delta):
 	moveKeyboard(delta)

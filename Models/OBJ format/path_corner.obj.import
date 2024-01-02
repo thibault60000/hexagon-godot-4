@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://dln0xxm5lvu7o"
+path="res://.godot/imported/path_corner.obj-56309c49c47f98ab77f40ffa32f89ad8.mesh"
+
+[deps]
+
+files=["res://.godot/imported/path_corner.obj-56309c49c47f98ab77f40ffa32f89ad8.mesh"]
+
+source_file="res://Models/OBJ format/path_corner.obj"
+dest_files=["res://.godot/imported/path_corner.obj-56309c49c47f98ab77f40ffa32f89ad8.mesh", "res://.godot/imported/path_corner.obj-56309c49c47f98ab77f40ffa32f89ad8.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false

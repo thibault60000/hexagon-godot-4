@@ -1,0 +1,22 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://df8ofacndx6eh"
+path="res://.godot/imported/building_farm.obj-f97b5a7ccf4dd1a764ba0f73f900b11b.mesh"
+
+[deps]
+
+files=["res://.godot/imported/building_farm.obj-f97b5a7ccf4dd1a764ba0f73f900b11b.mesh"]
+
+source_file="res://Models/OBJ format/building_farm.obj"
+dest_files=["res://.godot/imported/building_farm.obj-f97b5a7ccf4dd1a764ba0f73f900b11b.mesh", "res://.godot/imported/building_farm.obj-f97b5a7ccf4dd1a764ba0f73f900b11b.mesh"]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3(2, 2, 2)
+offset_mesh=Vector3(0, 0, 0)
+optimize_mesh=true
+force_disable_mesh_compression=false
